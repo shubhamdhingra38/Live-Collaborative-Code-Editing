@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Chatroom</title>
+{% endblock title %}
+{% block body %}
+    <div class="container mt-3">
+        <p class="lead">Welcome to the chatroom!</p>
+        {% if user.username != "" %}
+            <p class="lead" style="color: brown;">You are logged in as  <span  class="px-1" style="color: rgb(0, 0, 0); font-weight: bold">{{user.username}}</span></p>
+        {% else %}
+            <p class="lead">You must login to access the chat room.</p>
+            <a class="strong" href="/auth/login">Login</a>
+        {% endif %}
+    </div>
+{% endblock body %}

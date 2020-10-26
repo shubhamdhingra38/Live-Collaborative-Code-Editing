@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>Chatroom</title>
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <form>
+                    <div class="form-group">
+                        <label for="chat-text" class="h4 pt-5">Chatroom: <span style="color: brown;">{{room_name}}</span></label>
+                        <textarea disabled class="form-control" id="chat-text" rows="10"></textarea><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="input" class="lead">Message: </label>
+                        <input autocomplete="off" class="form-control" id="input" type="text">
+                    </div>
+                    <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
+                    <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{ request.user.username|json_script:"user_username" }}
+    {{ room_name|json_script:"room-name" }}
+    <script>
+        const user_username = JSON.parse(document.getElementById('user_username').textContent);
+        document.querySelector('#submit').onclick = function (e) {
+            const messageInputDom = document.querySelector('#input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+            }));
+            messageInputDom.value = '';
+        };
+
+
+
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+        const chatSocket = new WebSocket(
+            'ws://' +
+            window.location.host +
+            '/ws/chat/' +
+            roomName +
+            '/'
+        );
+
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            if(data.username){
+                document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n')
+            }
+            else{
+                document.querySelector('#chat-text').value += (data.message + '\n') 
+            }
+        }
+
+        $(document).ready(() => {
+            $("#exit").click(() => {
+                chatSocket.close();
+            })
+        })
+    </script>
+
+{% endblock body %}
