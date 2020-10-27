@@ -121,6 +121,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 ASGI_APPLICATION = "core.routing.application"
 
 LOGIN_URL = '/auth/login'

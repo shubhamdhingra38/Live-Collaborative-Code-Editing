@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 # from django.contrib.auth.forms import UserCreationForm
 from . import forms
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 
 
 
@@ -32,3 +32,7 @@ def register(request):
     else:
         form = forms.CreateUserForm()
     return render(request, 'register.html', {'form': form})
+
+def logout(request):
+    django_logout(request)
+    return redirect('/chat', {'success': "Logged out successfully"})
