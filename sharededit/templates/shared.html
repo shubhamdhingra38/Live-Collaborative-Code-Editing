@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Shared</title>
+<!-- <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js"></script> -->
+<script src="https://pagecdn.io/lib/ace/1.4.12/ace.min.js" crossorigin="anonymous" integrity="sha256-T5QdmsCQO5z8tBAXMrCZ4f3RX8wVdiA0Fu17FGnU1vU=" ></script>
+<script src="https://pagecdn.io/lib/ace/1.4.12/theme-twilight.min.js" crossorigin="anonymous"></script>
+<script src="https://pagecdn.io/lib/ace/1.4.12/mode-python.min.js" crossorigin="anonymous"  ></script>
+{% endblock %}
+
+{% block body %}
+<style type="text/css" media="screen">
+    #editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+    <!-- <div class="container mt-3">
+        <p>Shared Code Editoron</p>
+        <textarea class="language-python" name="editor" id="sharededitor" cols="50" rows="20"></textarea>
+        <pre><code class="language-python">def foo():</code></pre>
+
+    </div> -->
+
+    <div id="editor">if __name__ == '__main__':
+    print("Hello world!")
+    {{user.username}}
+    </div>
+    
+
+
+
+
+    {{ room_name|json_script:"room-name" }}
+    {{ user.username|json_script:"user-name"}}
+    <script>
+        // hljs.initHighlightingOnLoad()
+    var editor = ace.edit("editor");
+    // editor.setTheme("ace/theme/monokai");
+    editor.setTheme("ace/theme/twilight");
+    document.getElementById('editor').style.fontSize='14px';
+
+
+    editor.session.setMode("ace/mode/python");
+        const roomName = JSON.parse(document.getElementById('room-name').textContent)
+        const userName = JSON.parse(document.getElementById('user-name').textContent)
+        let lock = false
+        console.log(userName)
+        console.log(roomName)
+        // document.getElementById('editor').addEventListener('keyup', e => {
+        // console.log('Caret at: ', e.target.selectionStart)
+        // })
+
+
+        const chatSocket = new WebSocket(
+                'ws://' +
+                window.location.host +
+                '/ws/sharededit/' +
+                roomName +
+                '/'
+        );
+
+
+        editor.session.on('change', function(delta) {
+            console.log(lock)
+            if(lock) return;
+    // delta.start, delta.end, delta.lines, delta.action
+        console.log(delta)
+        // editor.getSession().getDocument().applyDeltas(delta)
+        chatSocket.send(JSON.stringify({"text": delta, "cursor": editor.selection.getCursor()}))
+    });
+
+
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            console.log(data)
+            if(userName!=data.username){
+                lock = true;
+                if(data['text']!=null){
+                    editor.getSession().getDocument().applyDeltas([data['text']])
+                }
+                lock = false;
+                console.log("YES")
+            }
+            else{
+                console.log("no username")
+            }
+        }
+        
+        //send updates from text editor to other people connected using websocket
+        //this will be done as soon as a keystroke is made
+        // $(document).ready(() => {
+        //     // $("#editor").on('input change keyup', () => {
+        //     //     console.log(editor.getValue())
+        //     //     console.log(editor.selection.getCursor())
+        //     //     chatSocket.send(JSON.stringify({"text": editor.getValue(), "cursor": editor.selection.getCursor()}))                
+        //     // })
+        // })
+
+        
+
+
+  
+    </script>
+{% endblock %}

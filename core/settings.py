@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'chat',
     'channels',
     'userauth',
+    'sharededit',
 ]
 
 MIDDLEWARE = [
