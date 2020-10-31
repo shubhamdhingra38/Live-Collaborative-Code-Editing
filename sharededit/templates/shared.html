@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 <title>Shared</title>
@@ -11,15 +12,15 @@
 {% endblock %}
 
 {% block body %}
-<style type="text/css" media="screen">
-    #editor { 
+<!-- <style type="text/css" media="screen">
+    /* #editor { 
         position: absolute;
-        top: 0;
+        top: 5px;
         right: 0;
         bottom: 0;
-        left: 0;
-    }
-</style>
+        left: 5px;
+    } */
+</style> -->
     <!-- <div class="container mt-3">
         <p>Shared Code Editoron</p>
         <textarea class="language-python" name="editor" id="sharededitor" cols="50" rows="20"></textarea>
@@ -27,84 +28,47 @@
 
     </div> -->
 
-    <div id="editor">if __name__ == '__main__':
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col col-8" id="editor" style="height: 100vh;">#code by: {{user.username}}
+if __name__ == '__main__':
     print("Hello world!")
-    {{user.username}}
+            </div>
+                                
+                            
+            <div class="col col-4" id="chatbox" style="height: 100vh; background-color: rgba(0, 0, 0, 0.15);">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-8">
+                            <form>
+                                <div class="form-group">
+                                    <label for="chat-text" class="h4 pt-5">Chatroom: <span style="color: brown;">{{room_name}}</span></label>
+                                    <div id="chat-text" style="height: 250px !important; overflow: auto; overflow-x: hidden; background-color: rgba(73, 70, 70, 0.15);" class="p-2 border border-danger"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input" class="lead">Message: </label>
+                                    <input autocomplete="off" class="form-control" id="input" type="text">
+                                </div>
+                                <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
+                                <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
     </div>
-    
 
 
 
 
+
+    {{ request.user.username|json_script:"user_username" }}
     {{ room_name|json_script:"room-name" }}
     {{ user.username|json_script:"user-name"}}
-    <script>
-        // hljs.initHighlightingOnLoad()
-    var editor = ace.edit("editor");
-    // editor.setTheme("ace/theme/monokai");
-    editor.setTheme("ace/theme/twilight");
-    document.getElementById('editor').style.fontSize='14px';
-
-
-    editor.session.setMode("ace/mode/python");
-        const roomName = JSON.parse(document.getElementById('room-name').textContent)
-        const userName = JSON.parse(document.getElementById('user-name').textContent)
-        let lock = false
-        console.log(userName)
-        console.log(roomName)
-        // document.getElementById('editor').addEventListener('keyup', e => {
-        // console.log('Caret at: ', e.target.selectionStart)
-        // })
-
-
-        const chatSocket = new WebSocket(
-                'ws://' +
-                window.location.host +
-                '/ws/sharededit/' +
-                roomName +
-                '/'
-        );
-
-
-        editor.session.on('change', function(delta) {
-            console.log(lock)
-            if(lock) return;
-    // delta.start, delta.end, delta.lines, delta.action
-        console.log(delta)
-        // editor.getSession().getDocument().applyDeltas(delta)
-        chatSocket.send(JSON.stringify({"text": delta, "cursor": editor.selection.getCursor()}))
-    });
-
-
-        chatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            console.log(data)
-            if(userName!=data.username){
-                lock = true;
-                if(data['text']!=null){
-                    editor.getSession().getDocument().applyDeltas([data['text']])
-                }
-                lock = false;
-                console.log("YES")
-            }
-            else{
-                console.log("no username")
-            }
-        }
-        
-        //send updates from text editor to other people connected using websocket
-        //this will be done as soon as a keystroke is made
-        // $(document).ready(() => {
-        //     // $("#editor").on('input change keyup', () => {
-        //     //     console.log(editor.getValue())
-        //     //     console.log(editor.selection.getCursor())
-        //     //     chatSocket.send(JSON.stringify({"text": editor.getValue(), "cursor": editor.selection.getCursor()}))                
-        //     // })
-        // })
-
-        
-
-
-  
-    </script>
+    
+    <script type="text/javascript" src="{% static 'chat.js' %}"></script>
+    <script type="text/javascript" src="{% static 'sharededit.js' %}"></script>
 {% endblock %}

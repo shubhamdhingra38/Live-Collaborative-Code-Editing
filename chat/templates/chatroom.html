@@ -32,46 +32,6 @@
    
     <!-- <script type="text/javascript" src="{% static 'emojionearea.min.js' %}"></script> -->
     
-    <script>
-        const user_username = JSON.parse(document.getElementById('user_username').textContent);
-        document.querySelector('#submit').onclick = function (e) {
-            const messageInputDom = document.querySelector('#input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-            }));
-            messageInputDom.value = '';
-        };
-
-
-
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-
-        const chatSocket = new WebSocket(
-            'ws://' +
-            window.location.host +
-            '/ws/chat/' +
-            roomName +
-            '/'
-        );
-        
-
-        chatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            if(data.username){
-                document.querySelector('#chat-text').innerHTML += ('<span class="text-danger">' + data.username + '</span>'+ ': ' + data.message + '<br/>')
-            }
-            else{
-                document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + data.message + '</span>' + '<br/>') 
-            }
-        }
-
-        $(document).ready(() => {
-            $("#exit").click(() => {
-                chatSocket.close()
-                document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + 'Connection closed.' + '</span>' + '<br/>') 
-            })
-        })
-    </script>
+    <script type="text/javascript" src="{% static 'chat.js' %}"></script>
 
 {% endblock body %}

@@ -12,13 +12,6 @@ class SharedEditConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'connect_message',
-                'message': f'{self.user.username} has joined the chat.',
-            }
-        )
 
         await self.accept()
 

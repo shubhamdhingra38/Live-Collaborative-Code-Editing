@@ -41,23 +41,47 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chatroom_message',
-                'message': message,
-                'username': self.user.username,
-            }
-        )
+        if text_data_json['type'] == 'chat':
+            text = text_data_json['message']
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chatroom_message',
+                    'message': text,
+                    'username': self.user.username,
+                }
+            )
+        else:
+            text = text_data_json['text']
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'text_change',
+                    'text': text,
+                    'username': self.user.username,
+                }
+            )
+        
+        
 
     async def chatroom_message(self, event):
         message = event['message']
         username = event['username']
 
         await self.send(text_data=json.dumps({
+            'type': 'chat',
             'message': message,
+            'username': username,
+        }))
+    
+    async def text_change(self, event):
+        text = event['text']
+        username = event['username']
+        print("got some text", text)
+
+        await self.send(text_data=json.dumps({
+            'type': 'editor',
+            'text': text,
             'username': username,
         }))
 
@@ -65,6 +89,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         message = event['message']
 
         await self.send(text_data=json.dumps({
+            'type': 'chat',
             'message': message
         }))
     
@@ -72,6 +97,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         message = event['message']
 
         await self.send(text_data=json.dumps({
+            'type': 'chat',
             'message': message
         }))
 
