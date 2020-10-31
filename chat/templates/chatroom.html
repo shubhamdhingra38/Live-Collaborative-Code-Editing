@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+{{ request.user.username|json_script:"user_username" }}
+{{ room_name|json_script:"room-name" }}
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-8">
@@ -25,13 +27,14 @@
     </div>
 
 
-    {{ request.user.username|json_script:"user_username" }}
-    {{ room_name|json_script:"room-name" }}
     
-    
+    <script>
+        const userName = "{{request.user.username}}"
+        const roomName = "{{room_name}}"
+    </script>
    
     <!-- <script type="text/javascript" src="{% static 'emojionearea.min.js' %}"></script> -->
     
-    <script type="text/javascript" src="{% static 'chat.js' %}"></script>
+<script type="text/javascript" src="{% static 'chat.js' %}"></script>
 
 {% endblock body %}

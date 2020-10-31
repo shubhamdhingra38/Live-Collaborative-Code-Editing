@@ -2,6 +2,8 @@ var editor = ace.edit("editor");
 editor.setTheme("ace/theme/twilight");
 document.getElementById('editor').style.fontSize='14px';
 
+console.log(userName)
+
 
 editor.session.setMode("ace/mode/python");
 let cursorPos = null;

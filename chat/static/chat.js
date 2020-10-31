@@ -1,5 +1,5 @@
-const userName = JSON.parse(document.getElementById('user-name').textContent)
-const roomName = JSON.parse(document.getElementById('room-name').textContent);
+// const userName = JSON.parse(document.getElementById('user-name').textContent)
+// const roomName = JSON.parse(document.getElementById('room-name').textContent);
 console.log(userName)
 console.log(roomName)
 
@@ -24,6 +24,22 @@ const chatSocket = new WebSocket(
     roomName +
     '/'
 );
+
+
+chatSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+
+    if(data.username){
+        document.querySelector('#chat-text').innerHTML += ('<span class="text-danger">' + data.username + '</span>'+ ': ' + data.message + '<br/>')
+    }
+    else{
+        document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + data.message + '</span>' + '<br/>') 
+    }
+   
+}
+
+
+
 
 
 $(document).ready(() => {
