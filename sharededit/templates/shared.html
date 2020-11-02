@@ -12,22 +12,6 @@
 {% endblock %}
 
 {% block body %}
-<!-- <style type="text/css" media="screen">
-    /* #editor { 
-        position: absolute;
-        top: 5px;
-        right: 0;
-        bottom: 0;
-        left: 5px;
-    } */
-</style> -->
-    <!-- <div class="container mt-3">
-        <p>Shared Code Editoron</p>
-        <textarea class="language-python" name="editor" id="sharededitor" cols="50" rows="20"></textarea>
-        <pre><code class="language-python">def foo():</code></pre>
-
-    </div> -->
-
     <div class="container-fluid">
         <div class="row">
             <div class="col col-8" id="editor" style="height: 100vh;">#code by: {{user.username}}
@@ -51,6 +35,7 @@ if __name__ == '__main__':
                                 </div>
                                 <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
                                 <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
+                                <input type="button" class="btn btn-success btn-lg btn-block" id="reload" style="display: none;" value="Reload">
                             </form>
                         </div>
                     </div>

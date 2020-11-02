@@ -2,12 +2,34 @@
 {% load static %}
 {% block title %}
     <title>Chatroom</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block body %}
-{{ request.user.username|json_script:"user_username" }}
-{{ room_name|json_script:"room-name" }}
-    <div class="container">
+
+
+    <div class="container mt-5">
+    {% if set_pass %}
+    <div>
+        <p class="lead">The room is unoccupied.
+            Enter a password: 
+        </p>
+        <form class="form-group d-flex" method="POST">
+            {% csrf_token %}
+            <input class="form-control w-25" type="password" name="room-password" id="password">
+            <button type="submit" id="submit-set-pass" class="btn btn-md btn-success mx-4">Submit</button>
+        </form>
+    </div>
+    {% elif get_pass %}
+        <p class="text-danger">The room is already occupied!
+            Enter the password: 
+        </p>
+        <form class="form-group d-flex" method="POST">
+            {% csrf_token %}
+            <input class="form-control w-25" type="password" name="room-password" id="password">
+            <button type="submit" id="submit-get-pass" class="btn btn-md btn-success mx-4">Submit</button>
+        </form>
+    {% else %}
         <div class="row d-flex justify-content-center">
             <div class="col-8">
                 <form>
@@ -21,20 +43,24 @@
                     </div>
                     <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
                     <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
+                    <input type="button" class="btn btn-success btn-lg btn-block" id="reload" style="display: none;" value="Reload">
                 </form>
             </div>
         </div>
+    {% endif %}
     </div>
-
-
     
     <script>
         const userName = "{{request.user.username}}"
         const roomName = "{{room_name}}"
+
     </script>
    
     <!-- <script type="text/javascript" src="{% static 'emojionearea.min.js' %}"></script> -->
-    
-<script type="text/javascript" src="{% static 'chat.js' %}"></script>
+    {% if get_pass or set_pass %}
+        <script type="text/javascript" src="{% static 'pass.js' %}"></script>
+    {% else %}
+        <script type="text/javascript" src="{% static 'chat.js' %}"></script>
+    {% endif %}
 
 {% endblock body %}

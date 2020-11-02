@@ -46,5 +46,11 @@ $(document).ready(() => {
     $("#exit").click(() => {
         chatSocket.close()
         document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + 'Connection closed.' + '</span>' + '<br/>') 
+        $("#exit").hide()
+        $("#submit").hide()
+        $("#reload").show()
+    })
+    $("#reload").click(() => {
+        location.reload()
     })
 })
