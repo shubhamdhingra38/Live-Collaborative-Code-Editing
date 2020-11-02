@@ -12,7 +12,10 @@ $(document).ready(() => {
             headers: {
                 'X-CSRFToken': token
             }
-        }).then((res) => console.log(res)).catch((err) => {
+        }).then((res) => {
+            console.log(res)
+            location.reload()
+        }).catch((err) => {
             console.error(err.response)
             alert(err.response.data.msg)
         })
@@ -33,6 +36,7 @@ $(document).ready(() => {
             }
         }).then(res => {
             console.log(res)
+            location.reload()
         }).catch(err => alert(err.response.data.msg))
     })
 })

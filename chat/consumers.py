@@ -1,5 +1,8 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
+from sharededit.models import ChatUser, ChatRoom, UserAndRoom
+
 
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
@@ -7,6 +10,9 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         self.user = self.scope['user']
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
+
+        self.chat_user = await self.get_chat_user()
+        self.chat_room = await self.get_chat_room()
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -22,8 +28,23 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
+    @database_sync_to_async
+    def get_chat_user(self):
+        return ChatUser.objects.get(chat_user=self.scope['user'])
+    
+    @database_sync_to_async
+    def get_chat_room(self):
+        return ChatRoom.objects.get(room_name=self.room_name)
+
+    @database_sync_to_async
+    def remove_chat_user(self):
+        self.chat_user.chat_rooms.remove(self.chat_room)
+        self.chat_user.save()
+
     async def disconnect(self, close_code):
         print("received exit from user", self.user.username)
+        await self.remove_chat_user()
+        print("removed user from db")
         await self.channel_layer.group_send(
             self.room_group_name,
             {
