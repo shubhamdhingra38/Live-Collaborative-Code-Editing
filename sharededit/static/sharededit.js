@@ -51,13 +51,13 @@ chatSocket.onmessage = function (e) {
             
     
         }
-        else{
-            console.log("no username")
-        }
+        // else{
+        //     // console.log("no username")
+        // }
     }
     else if(data['type']=='canvas'){
-        console.log('got canvas data')
-        console.log(data['data'])
+        // console.log('got canvas data')
+        // console.log(data['data'])
         drawQueue.push(data['data'])
 
     }

@@ -8,7 +8,7 @@ Boilerplate for basic chatroom using Django and Django Channels (with authentica
 # TODO
 - [x] Password protection for chat and live code editing
 - [x] Canvas screen (to draw) which is shared
-- [ ] UI improvements (chatroom)
+- [x] UI improvements (chatroom)
 - [ ] Synchronization fixes (check every few seconds maybe)
 - [ ] Ability to run code
 - [ ] Zombie rooms removal (in case server crashes and rooms are still occupied)

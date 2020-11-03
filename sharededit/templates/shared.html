@@ -14,6 +14,7 @@
     integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ=="
     crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+<link rel="stylesheet" href="{% static 'style.css' %}">
 {% endblock %}
 
 {% block body %}
@@ -46,31 +47,31 @@
 
     <div class="row" class="mx-0">
         <!-- Editor -->
-        <div class="col-8" id="editor" style="height: 100vh;">#code by: {{user.username}}
+        <div class="col-md-7 col-sm-12" id="editor" style="height: 100vh;">#code by: {{user.username}}
 if __name__ == '__main__':
     print('Hello world!')
         </div>
 
 
         <!-- Layout with chat + canvas -->
-        <div class="col-4 p-0">
+        <div class="col-md-5 col-sm-12 p-0">
             <!-- Chat -->
-            <div id="chatbox" style="position: relative; height: 50vh; background-color: rgba(0, 0, 0, 0.15);">
+            <div id="chatbox" style="min-height: 350px !important; height: 50vh; background-color: rgba(0, 0, 0, 0.15);">
                 <div class="mx-4">
                     <form>
                         <div class="form-group">
                             <label for="chat-text" class="h4 pt-1">Chatroom: <span
                                     style="color: brown;">{{room_name}}</span></label>
                             <div id="chat-text"
-                                style="width: 100%; height: 150px; overflow: auto !important; word-wrap: break-word; background-color: rgba(73, 70, 70, 0.205);"
-                                class="p-1 border border-danger"></div>
+                                style="height: 120px; min-height: 100px !important; overflow: auto !important; word-wrap: break-word; background-color: rgba(73, 70, 70, 0.205);"
+                                class="p-2 border border-danger"></div>
                         </div>
                         <div class="form-group mt-0">
                             <label for="input" class="lead">Message: </label>
                             <input autocomplete="off" class="form-control mb-2" id="input" type="text">
-                        <input type="button" class="btn btn-secondary btn-md btn-block" id="submit" value="Send">
-                        <input type="button" class="btn btn-danger btn-md btn-block" id="exit" value="Exit">
-                        <input type="button" class="btn btn-success btn-md btn-block" id="reload" style="display: none;"
+                            <input type="button" class="btn btn-secondary btn-md btn-block" id="submit" value="Send">
+                            <input type="button" class="btn btn-danger btn-md btn-block" id="exit" value="Exit">
+                            <input type="button" class="btn btn-success btn-md btn-block" id="reload" style="display: none;"
                             value="Reload">
                         </div>
                     </form>
@@ -78,7 +79,7 @@ if __name__ == '__main__':
             </div>
             <!-- Canvas -->
             <div id="sketch-holder"
-                style="border-style: solid; border-color: rgba(128, 128, 128, 0.726); border-width: 5px;position: absolute !important; height: 50vh !important; background-color: black;">
+                style="border-style: solid; border-color: rgba(128, 128, 128, 0.726); border-width: 3.5px;position: absolute !important; height: 50% !important; background-color: black;">
 
             </div>
         </div>
@@ -87,14 +88,6 @@ if __name__ == '__main__':
 </div>
 
 {% endif %}
-
-
-<style>
-    body{
-          overflow: hidden; /* Hide scrollbars */
-
-    }
-</style>
 
 <script>
     const userName = "{{request.user.username}}"
