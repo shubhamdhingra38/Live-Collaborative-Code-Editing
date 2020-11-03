@@ -19,28 +19,32 @@
 
 {% block body %}
 
-{% if set_pass %}
-<div class="mt-5 container">
-    <p class="lead">The room is unoccupied.
-        Enter a password:
-    </p>
-    <form class="form-group d-flex" method="POST">
-        {% csrf_token %}
-        <input class="form-control w-25" type="password" name="room-password" id="password">
-        <button type="submit" id="submit-set-pass" class="btn btn-md btn-success mx-4">Submit</button>
-    </form>
-</div>
-{% elif get_pass %}
-<div class="mt-5 container">
-    <p class="text-danger">The room is already occupied!
-        Enter the password:
-    </p>
-    <form class="form-group d-flex" method="POST">
-        {% csrf_token %}
-        <input class="form-control w-25" type="password" name="room-password" id="password">
-        <button type="submit" id="submit-get-pass" class="btn btn-md btn-success mx-4">Submit</button>
-    </form>
-</div>
+    {% if set_pass %}
+    <div class="h-100 d-flex mx-2 justify-content-center align-items-center">
+        <div>
+            <p class="lead">The room is <strong>unoccupied.</strong>
+                Enter a password to claim it. 
+            </p>
+            <form class="form-group d-flex" method="POST">
+                {% csrf_token %}
+                <input class="form-control w-50" type="password" name="room-password" id="password">
+                <button type="submit" id="submit-set-pass" class="btn btn-sm btn-success mx-4">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% elif get_pass %}
+    <div class="h-100 d-flex mx-2 justify-content-center align-items-center">
+        <div>
+            <p class="lead text-danger">The room is already occupied!
+                Enter the password: 
+            </p>
+            <form class="form-group d-flex" method="POST">
+                {% csrf_token %}
+                <input class="form-control w-50" type="password" name="room-password" id="password">
+                <button type="submit" id="submit-get-pass" class="btn btn-sm btn-success mx-4">Submit</button>
+            </form>
+        </div>
+    </div>
 {% else %}
 
 <div class="container-fluid">
@@ -79,7 +83,8 @@ if __name__ == '__main__':
             </div>
             <!-- Canvas -->
             <div id="sketch-holder"
-                style="border-style: solid; border-color: rgba(128, 128, 128, 0.726); border-width: 3.5px;position: absolute !important; height: 50% !important; background-color: black;">
+                style="position: relative;border-style: solid; border-color: rgba(128, 128, 128, 0.726); border-width: 3.5px;position: absolute !important; height: 50% !important; background-color: black;">
+                <p class="text-white" style="position: absolute; z-index: 500; right: 50px;">Live Sketch</p>
 
             </div>
         </div>

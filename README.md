@@ -13,3 +13,4 @@ Boilerplate for basic chatroom using Django and Django Channels (with authentica
 - [ ] Ability to run code
 - [ ] Zombie rooms removal (in case server crashes and rooms are still occupied)
 - [ ] Resize code window and chat window partition
+- [ ] FIX: Different canvas sizes cause problems

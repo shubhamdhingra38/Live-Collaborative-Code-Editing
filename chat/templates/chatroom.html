@@ -3,32 +3,38 @@
 {% block title %}
     <title>Chatroom</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 {% endblock %}
 
 {% block body %}
 
 
-    <div class="container mt-5">
     {% if set_pass %}
-    <div>
-        <p class="lead">The room is unoccupied.
-            Enter a password: 
-        </p>
-        <form class="form-group d-flex" method="POST">
-            {% csrf_token %}
-            <input class="form-control w-25" type="password" name="room-password" id="password">
-            <button type="submit" id="submit-set-pass" class="btn btn-md btn-success mx-4">Submit</button>
-        </form>
+    <div class="h-100 d-flex mx-2 justify-content-center align-items-center">
+        <div>
+            <p class="lead">The room is <strong>unoccupied.</strong>
+                Enter a password to claim it. 
+            </p>
+            <form class="form-group d-flex" method="POST">
+                {% csrf_token %}
+                <input class="form-control w-50" type="password" name="room-password" id="password">
+                <button type="submit" id="submit-set-pass" class="btn btn-sm btn-success mx-4">Submit</button>
+            </form>
+        </div>
     </div>
     {% elif get_pass %}
-        <p class="text-danger">The room is already occupied!
-            Enter the password: 
-        </p>
-        <form class="form-group d-flex" method="POST">
-            {% csrf_token %}
-            <input class="form-control w-25" type="password" name="room-password" id="password">
-            <button type="submit" id="submit-get-pass" class="btn btn-md btn-success mx-4">Submit</button>
-        </form>
+    <div class="h-100 d-flex mx-2 justify-content-center align-items-center">
+        <div>
+            <p class="lead text-danger">The room is already occupied!
+                Enter the password: 
+            </p>
+            <form class="form-group d-flex" method="POST">
+                {% csrf_token %}
+                <input class="form-control w-50" type="password" name="room-password" id="password">
+                <button type="submit" id="submit-get-pass" class="btn btn-sm btn-success mx-4">Submit</button>
+            </form>
+        </div>
+    </div>
     {% else %}
         <div class="row d-flex justify-content-center">
             <div class="col-8">
@@ -48,7 +54,6 @@
             </div>
         </div>
     {% endif %}
-    </div>
     
     <script>
         const userName = "{{request.user.username}}"
