@@ -34,6 +34,8 @@ chatSocket.onmessage = function (e) {
         else{
             document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + data.message + '</span>' + '<br/>') 
         }
+        var xH = chatWindow.scrollHeight
+        chatWindow.scrollTo(0, xH)
     }
     else if(data['type']=='editor'){
         if(userName!=data.username){

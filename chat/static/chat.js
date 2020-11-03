@@ -4,6 +4,8 @@ console.log(userName)
 console.log(roomName)
 
 
+let chatWindow = document.getElementById('chat-text');
+
 document.querySelector('#submit').onclick = function (e) {
     console.log('sending data')
     const messageInputDom = document.querySelector('#input');
@@ -26,6 +28,12 @@ const chatSocket = new WebSocket(
     '/'
 );
 
+//stop reloading page when pressed enter in chatbox, but instead click the submit button
+$("#input").on('keypress', (e) => {
+    if(e.key == 'Enter'){
+        $("#submit").click()
+    }
+})
 
 chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
@@ -37,7 +45,9 @@ chatSocket.onmessage = function (e) {
     else{
         document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + data.message + '</span>' + '<br/>') 
     }
-   
+    var xH = chatWindow.scrollHeight; 
+    chatWindow.scrollTo(0, xH);
+
 }
 
 

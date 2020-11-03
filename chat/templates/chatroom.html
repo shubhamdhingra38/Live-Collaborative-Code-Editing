@@ -38,7 +38,6 @@
     {% else %}
         <div class="row d-flex justify-content-center">
             <div class="col-8">
-                <form>
                     <div class="form-group">
                         <label for="chat-text" class="h4 pt-5">Chatroom: <span style="color: brown;">{{room_name}}</span></label>
                         <div id="chat-text" style="height: 250px !important; overflow: auto; overflow-x: hidden;" class="p-2 border"></div>
@@ -50,7 +49,6 @@
                     <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
                     <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
                     <input type="button" class="btn btn-success btn-lg btn-block" id="reload" style="display: none;" value="Reload">
-                </form>
             </div>
         </div>
     {% endif %}

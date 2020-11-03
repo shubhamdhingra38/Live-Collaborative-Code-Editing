@@ -4,19 +4,15 @@
 {% endblock title %}
 {% block body %}
 
+<style>
+    html, body{
+        height: 100% !important;
+        overflow: hidden;
+    }
+</style>
 <div class="container mt-3">
-    {% if form.errors %}
-        {% for field in form %}
-            {% for error in field.errors %}
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <strong>{{ error|escape }}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
+        {% if errors %}
+        {% for error in errors %}
             <div class="alert alert-danger alert-dismissible fade show">
                 <strong>{{ error|escape }}</strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -24,20 +20,24 @@
                 </button>
             </div>
         {% endfor %}
-    {% endif %}
-
-
-    <form method="post">
-        {% csrf_token %}
-        <p class="display-4">Register</p>
-        {% for field in form %}
-        <div class="form-group">
-            {{field.label}}
-            {{field}}
-        </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+        {% endif %}
+</div>
+<div class="h-100 d-flex mx-2 justify-content-center align-items-center  mt-3">
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <p class="display-4">Register</p>
+            {% for field in form %}
+            <div class="form-group">
+                {{field.label}}
+                <div style="width: 250px !important;">
+                    {{field}}
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
 </div>
 
 
