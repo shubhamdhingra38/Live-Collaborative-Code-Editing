@@ -6,5 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chat/', include('chat.urls')),
     path('auth/', include('userauth.urls')),
-    path('dev/', include('sharededit.urls')),
+    path('code/', include('sharededit.urls')),
 ]

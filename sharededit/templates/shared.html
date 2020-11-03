@@ -9,7 +9,8 @@
 <script src="https://pagecdn.io/lib/ace/1.4.12/ace.min.js" crossorigin="anonymous" integrity="sha256-T5QdmsCQO5z8tBAXMrCZ4f3RX8wVdiA0Fu17FGnU1vU=" ></script>
 <script src="https://pagecdn.io/lib/ace/1.4.12/theme-twilight.min.js" crossorigin="anonymous"></script>
 <script src="https://pagecdn.io/lib/ace/1.4.12/mode-python.min.js" crossorigin="anonymous"  ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -38,40 +39,45 @@
         </div>
     {% else %}
 
-    <div class="container">
+    <div class="container-fluid">
 
-        <div class="row">
+        <div class="row" style="position: relative;">
+            <!-- Editor -->
             <div class="col col-8" id="editor" style="height: 100vh;">#code by: {{user.username}}
 if __name__ == '__main__':
     print("Hello world!")
             </div>
                                 
                             
-            <div class="col col-4" id="chatbox" style="height: 100vh; background-color: rgba(0, 0, 0, 0.15);">
-                <div class="container">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-8">
-                            <form>
-                                <div class="form-group">
-                                    <label for="chat-text" class="h4 pt-5">Chatroom: <span style="color: brown;">{{room_name}}</span></label>
-                                    <div id="chat-text" style="height: 250px !important; overflow: auto; overflow-x: hidden; background-color: rgba(73, 70, 70, 0.205);" class="p-2 border border-danger"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input" class="lead">Message: </label>
-                                    <input autocomplete="off" class="form-control" id="input" type="text">
-                                </div>
-                                <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
-                                <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
-                                <input type="button" class="btn btn-success btn-lg btn-block" id="reload" style="display: none;" value="Reload">
-                            </form>
+            <!-- Layout with chat + canvas -->
+            <div class="col col-4">
+                <!-- Chat -->
+                <div id="chatbox" style="height: 50vh; background-color: rgba(0, 0, 0, 0.15);">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="chat-text" class="h4 pt-5">Chatroom: <span style="color: brown;">{{room_name}}</span></label>
+                                        <div id="chat-text" style="overflow: auto; overflow-x: hidden; background-color: rgba(73, 70, 70, 0.205);" class="p-2 border border-danger"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input" class="lead">Message: </label>
+                                        <input autocomplete="off" class="form-control" id="input" type="text">
+                                    </div>
+                                    <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
+                                    <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
+                                    <input type="button" class="btn btn-success btn-lg btn-block" id="reload" style="display: none;" value="Reload">
+                                </form>
                         </div>
                     </div>
+                </div>
+                <!-- Canvas -->
+                <div id="sketch-holder" style="position: absolute !important; height: 50vh !important;">
+
                 </div>
             </div>
 
         </div>
-
-
     </div>
         
     {% endif %}
@@ -89,5 +95,6 @@ if __name__ == '__main__':
     {% else %}
         <script type="text/javascript" src="{% static 'chat.js' %}"></script>
         <script type="text/javascript" src="{% static 'sharededit.js' %}"></script>
+        <script type="text/javascript" src="{% static 'canvas.js' %}"></script>
     {% endif %}
 {% endblock %}

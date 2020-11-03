@@ -26,17 +26,18 @@ const chatSocket = new WebSocket(
 );
 
 
-chatSocket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
+// chatSocket.onmessage = function (e) {
+//     const data = JSON.parse(e.data);
 
-    if(data.username){
-        document.querySelector('#chat-text').innerHTML += ('<span class="text-danger">' + data.username + '</span>'+ ': ' + data.message + '<br/>')
-    }
-    else{
-        document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + data.message + '</span>' + '<br/>') 
-    }
+//     console.log("YES this")
+//     if(data.username){
+//         document.querySelector('#chat-text').innerHTML += ('<span class="text-danger">' + data.username + '</span>'+ ': ' + data.message + '<br/>')
+//     }
+//     else{
+//         document.querySelector('#chat-text').innerHTML += ('<span class="font-weight-bold">' + data.message + '</span>' + '<br/>') 
+//     }
    
-}
+// }
 
 
 

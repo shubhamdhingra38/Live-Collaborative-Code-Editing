@@ -1,8 +1,9 @@
 var editor = ace.edit("editor");
+let drawQueue = [] //for canvas
 editor.setTheme("ace/theme/twilight");
 document.getElementById('editor').style.fontSize='14px';
 
-console.log(userName)
+console.log(userName, 'joined the chat')
 
 
 editor.session.setMode("ace/mode/python");
@@ -24,7 +25,7 @@ chatSocket.send(JSON.stringify({"type": "editor", "text": delta, "cursor": edito
 
 
 chatSocket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
+    let data = JSON.parse(e.data);
 
     if(data['type']=='chat'){
         if(data.username){
@@ -53,6 +54,12 @@ chatSocket.onmessage = function (e) {
         else{
             console.log("no username")
         }
+    }
+    else if(data['type']=='canvas'){
+        console.log('got canvas data')
+        console.log(data['data'])
+        drawQueue.push(data['data']['mousePos'])
+
     }
     // console.log(data)
    

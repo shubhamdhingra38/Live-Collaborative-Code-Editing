@@ -72,6 +72,16 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'username': self.user.username,
                 }
             )
+        elif text_data_json['type'] == 'canvas':
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'canvas_information',
+                    'data': text_data_json['data'],
+                    'username': self.user.username,
+                }
+            )
+
         else:
             text = text_data_json['text']
             await self.channel_layer.group_send(
@@ -83,7 +93,17 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                 }
             )
         
-        
+    
+    async def canvas_information(self, event):
+        data = event['data']
+        print('got canvas data', data)
+        username = event['username']
+
+        await self.send(text_data=json.dumps({
+            'type': 'canvas',
+            'data': data,
+            'username': username,
+        }))
 
     async def chatroom_message(self, event):
         message = event['message']
