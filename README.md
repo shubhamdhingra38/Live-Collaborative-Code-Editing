@@ -1,6 +1,10 @@
-# Basic-Chat-App-Django-Channels-
-Boilerplate for basic chatroom using Django and Django Channels (with authentication required to access chat)
+# Live Collaborative Code Editing
+A web application which uses sockets to enable real-time code sharing, chatting and canvas sketching all at once. 
+Live hosted website: https://collab-code-edit.herokuapp.com/
 
+
+
+# Screenshot
 <img src="https://github.com/shubhamdhingra38/Basic-Chat-App-Django-Channels/blob/master/Screenshots/Capture.PNG"/>
 
 
