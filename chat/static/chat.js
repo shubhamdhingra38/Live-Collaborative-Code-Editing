@@ -50,7 +50,9 @@ chatSocket.onmessage = function (e) {
 
 }
 
-
+chatSocket.onclose = (e) => {
+    alert("Lost connection to the server. Disconnected.")
+}
 
 
 
