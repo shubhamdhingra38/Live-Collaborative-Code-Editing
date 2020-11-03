@@ -96,7 +96,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
     
     async def canvas_information(self, event):
         data = event['data']
-        print('got canvas data', data)
+        # print('got canvas data', data)
         username = event['username']
 
         await self.send(text_data=json.dumps({

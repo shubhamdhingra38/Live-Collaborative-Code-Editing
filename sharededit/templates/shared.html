@@ -6,95 +6,106 @@
 <!-- <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js"></script> -->
-<script src="https://pagecdn.io/lib/ace/1.4.12/ace.min.js" crossorigin="anonymous" integrity="sha256-T5QdmsCQO5z8tBAXMrCZ4f3RX8wVdiA0Fu17FGnU1vU=" ></script>
+<script src="https://pagecdn.io/lib/ace/1.4.12/ace.min.js" crossorigin="anonymous"
+    integrity="sha256-T5QdmsCQO5z8tBAXMrCZ4f3RX8wVdiA0Fu17FGnU1vU="></script>
 <script src="https://pagecdn.io/lib/ace/1.4.12/theme-twilight.min.js" crossorigin="anonymous"></script>
-<script src="https://pagecdn.io/lib/ace/1.4.12/mode-python.min.js" crossorigin="anonymous"  ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
+<script src="https://pagecdn.io/lib/ace/1.4.12/mode-python.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"
+    integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ=="
+    crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
 {% endblock %}
 
 {% block body %}
 
-    {% if set_pass %}
-        <div class="mt-5 container">
-            <p class="lead">The room is unoccupied.
-                Enter a password: 
-            </p>
-            <form class="form-group d-flex" method="POST">
-                {% csrf_token %}
-                <input class="form-control w-25" type="password" name="room-password" id="password">
-                <button type="submit" id="submit-set-pass" class="btn btn-md btn-success mx-4">Submit</button>
-            </form>
-        </div>
-    {% elif get_pass %}
-        <div class="mt-5 container">
-            <p class="text-danger">The room is already occupied!
-                Enter the password: 
-            </p>
-            <form class="form-group d-flex" method="POST">
-                {% csrf_token %}
-                <input class="form-control w-25" type="password" name="room-password" id="password">
-                <button type="submit" id="submit-get-pass" class="btn btn-md btn-success mx-4">Submit</button>
-            </form>
-        </div>
-    {% else %}
+{% if set_pass %}
+<div class="mt-5 container">
+    <p class="lead">The room is unoccupied.
+        Enter a password:
+    </p>
+    <form class="form-group d-flex" method="POST">
+        {% csrf_token %}
+        <input class="form-control w-25" type="password" name="room-password" id="password">
+        <button type="submit" id="submit-set-pass" class="btn btn-md btn-success mx-4">Submit</button>
+    </form>
+</div>
+{% elif get_pass %}
+<div class="mt-5 container">
+    <p class="text-danger">The room is already occupied!
+        Enter the password:
+    </p>
+    <form class="form-group d-flex" method="POST">
+        {% csrf_token %}
+        <input class="form-control w-25" type="password" name="room-password" id="password">
+        <button type="submit" id="submit-get-pass" class="btn btn-md btn-success mx-4">Submit</button>
+    </form>
+</div>
+{% else %}
 
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <div class="row" style="position: relative;">
-            <!-- Editor -->
-            <div class="col col-8" id="editor" style="height: 100vh;">#code by: {{user.username}}
+    <div class="row" class="mx-0">
+        <!-- Editor -->
+        <div class="col-8" id="editor" style="height: 100vh;">#code by: {{user.username}}
 if __name__ == '__main__':
-    print("Hello world!")
-            </div>
-                                
-                            
-            <!-- Layout with chat + canvas -->
-            <div class="col col-4">
-                <!-- Chat -->
-                <div id="chatbox" style="height: 50vh; background-color: rgba(0, 0, 0, 0.15);">
-                    <div class="container">
-                        <div class="row d-flex justify-content-center">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="chat-text" class="h4 pt-5">Chatroom: <span style="color: brown;">{{room_name}}</span></label>
-                                        <div id="chat-text" style="overflow: auto; overflow-x: hidden; background-color: rgba(73, 70, 70, 0.205);" class="p-2 border border-danger"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="input" class="lead">Message: </label>
-                                        <input autocomplete="off" class="form-control" id="input" type="text">
-                                    </div>
-                                    <input type="button" class="btn btn-secondary btn-lg btn-block" id="submit" value="Send">
-                                    <input type="button" class="btn btn-danger btn-lg btn-block" id="exit" value="Exit">
-                                    <input type="button" class="btn btn-success btn-lg btn-block" id="reload" style="display: none;" value="Reload">
-                                </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Canvas -->
-                <div id="sketch-holder" style="position: absolute !important; height: 50vh !important;">
-
-                </div>
-            </div>
-
+    print('Hello world!')
         </div>
+
+
+        <!-- Layout with chat + canvas -->
+        <div class="col-4 p-0">
+            <!-- Chat -->
+            <div id="chatbox" style="position: relative; height: 50vh; background-color: rgba(0, 0, 0, 0.15);">
+                <div class="mx-4">
+                    <form>
+                        <div class="form-group">
+                            <label for="chat-text" class="h4 pt-1">Chatroom: <span
+                                    style="color: brown;">{{room_name}}</span></label>
+                            <div id="chat-text"
+                                style="width: 100%; height: 150px; overflow: auto !important; word-wrap: break-word; background-color: rgba(73, 70, 70, 0.205);"
+                                class="p-1 border border-danger"></div>
+                        </div>
+                        <div class="form-group mt-0">
+                            <label for="input" class="lead">Message: </label>
+                            <input autocomplete="off" class="form-control mb-2" id="input" type="text">
+                        <input type="button" class="btn btn-secondary btn-md btn-block" id="submit" value="Send">
+                        <input type="button" class="btn btn-danger btn-md btn-block" id="exit" value="Exit">
+                        <input type="button" class="btn btn-success btn-md btn-block" id="reload" style="display: none;"
+                            value="Reload">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Canvas -->
+            <div id="sketch-holder"
+                style="border-style: solid; border-color: rgba(128, 128, 128, 0.726); border-width: 5px;position: absolute !important; height: 50vh !important; background-color: black;">
+
+            </div>
+        </div>
+
     </div>
-        
-    {% endif %}
+</div>
+
+{% endif %}
 
 
-    
+<style>
+    body{
+          overflow: hidden; /* Hide scrollbars */
 
-    <script>
-        const userName = "{{request.user.username}}"
-        const roomName = "{{room_name}}"
-    </script>
+    }
+</style>
 
-    {% if get_pass or set_pass %}
-        <script type="text/javascript" src="{% static 'pass.js' %}"></script>
-    {% else %}
-        <script type="text/javascript" src="{% static 'chat.js' %}"></script>
-        <script type="text/javascript" src="{% static 'sharededit.js' %}"></script>
-        <script type="text/javascript" src="{% static 'canvas.js' %}"></script>
-    {% endif %}
+<script>
+    const userName = "{{request.user.username}}"
+    const roomName = "{{room_name}}"
+</script>
+
+{% if get_pass or set_pass %}
+<script type="text/javascript" src="{% static 'pass.js' %}"></script>
+{% else %}
+<script type="text/javascript" src="{% static 'chat.js' %}"></script>
+<script type="text/javascript" src="{% static 'sharededit.js' %}"></script>
+<script type="text/javascript" src="{% static 'canvas.js' %}"></script>
+{% endif %}
 {% endblock %}

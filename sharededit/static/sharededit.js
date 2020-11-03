@@ -1,15 +1,15 @@
-var editor = ace.edit("editor");
 let drawQueue = [] //for canvas
+
+var editor = ace.edit("editor");
 editor.setTheme("ace/theme/twilight");
 document.getElementById('editor').style.fontSize='14px';
+editor.session.setMode("ace/mode/python");
 
 console.log(userName, 'joined the chat')
 
 
-editor.session.setMode("ace/mode/python");
 let cursorPos = null;
 let lock = false
-
 
 
 //send updates from text editor to other people connected using websocket
@@ -58,7 +58,7 @@ chatSocket.onmessage = function (e) {
     else if(data['type']=='canvas'){
         console.log('got canvas data')
         console.log(data['data'])
-        drawQueue.push(data['data']['mousePos'])
+        drawQueue.push(data['data'])
 
     }
     // console.log(data)
