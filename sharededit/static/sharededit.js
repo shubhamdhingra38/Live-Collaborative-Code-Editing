@@ -74,3 +74,22 @@ chatSocket.onmessage = function (e) {
 //     //     chatSocket.send(JSON.stringify({"text": editor.getValue(), "cursor": editor.selection.getCursor()}))                
 //     // })
 // })
+
+function changeFontSize(e) {
+    let val = e.value
+    let ele = document.getElementById('editor')
+    ele.style.fontSize=`${val}px`
+}
+
+
+
+
+function runCode(e) {
+    let code = editor.getValue()
+    axios.post(api.sendCodeURL, {
+        'lang': "Python3",
+        'code': code,
+        'input': '',
+        'save': false
+    }).then(res => console.log(res)).error(console.log(error.response))
+}
