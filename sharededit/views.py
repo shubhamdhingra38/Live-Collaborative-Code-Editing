@@ -7,7 +7,9 @@ from .models import ChatUser, ChatRoom, UserAndRoom
 import requests
 from django.views.decorators.csrf import csrf_exempt
 import json
+from io import StringIO
 import time
+import sys
 
 @login_required
 def shared_editing(request, room_name):
@@ -36,51 +38,17 @@ def shared_editing(request, room_name):
         })
 
 
-
-api = {
-    'sendCodeURL': 'https://ide.geeksforgeeks.org/main.php',
-    'receiveResultsURL': 'https://ide.geeksforgeeks.org/submissionResult.php'
-}
-
-
-
-#TODO remove csrf exempt, make non blocking calls
+#TODO (this is very unsafe way of executing untrusted scripts)
 @csrf_exempt
 def run_code(request):
     if request.method == 'POST':
-        body = {
-            'lang': "Python3",
-            'code': request.POST['code'],
-            # 'code': code,
-            'save': "false",
-            'input': ""
-        }
-        response = requests.post(api['sendCodeURL'], body)
-        res = response.json()
-        print(res)
-        if response.ok and 'sid' in res:
-            print("ok, got results code")
-            s_id = res['sid']
-            time.sleep(10)
-            response = requests.post(api['receiveResultsURL'], {
-                'requestType': 'fetchResults',
-                'sid': s_id
-            })
-            res = response.json()
-            print(response.content)
-            print(response.ok)
-
-            if response.ok and 'valid' in res:
-                valid_status = res['valid']
-                if valid_status == '1':
-                    #runs
-                    return JsonResponse({"msg": "Ran successfully", "data": res}, status=200)
-                else:
-                    #some error
-                    return JsonResponse({"msg": "Compilation/runtime error"}, status=400)
-            # return JsonResponse({"msg": "Ok"}, status=200)
-            else:
-                return JsonResponse({"msg": "Failed"}, status=400)
-        else:
-            return JsonResponse({"msg": "Failed"}, status=400)
-
+        body = json.loads(request.body)
+        code = body['code']
+        out = StringIO()
+        sys.stdout = out
+        try:
+            exec(code)
+            results = out.getvalue()
+            return JsonResponse({"code": 0, "msg": "Successfully ran code", "results": results}, status=200)
+        except:
+            return JsonResponse({"code": 1, "msg": "Could not execute the code"}, status=400)

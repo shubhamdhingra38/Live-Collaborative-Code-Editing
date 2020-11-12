@@ -86,10 +86,23 @@ function changeFontSize(e) {
 
 function runCode(e) {
     let code = editor.getValue()
-    axios.post(api.sendCodeURL, {
-        'lang': "Python3",
+    let ele = document.getElementById('code-output')
+    ele.classList = ['text-white']
+    axios.post('/code/run/', {
         'code': code,
-        'input': '',
-        'save': false
-    }).then(res => console.log(res)).error(console.log(error.response))
+    }).then(res => {
+        let text = res.data.results.replace("\n", "<br>")
+        ele.innerHTML = text
+        
+
+    }).catch(err=>{
+        ele.classList.add('text-danger')
+        ele.innerText = "Could not execute code"
+    })
+}
+
+//also resynchronize the code for all clients connected through WS
+//TODO
+function saveCode(e) {
+    let code = editor.getValue()
 }

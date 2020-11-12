@@ -15,7 +15,8 @@ Live hosted website: https://collab-code-edit.herokuapp.com/
 - [x] UI improvements (chatroom)
 - [x] FIX: New users can't access chat
 - [ ] Synchronization fixes (check every few seconds maybe)
-- [ ] Ability to run code
+- [x] Ability to run code
 - [ ] Zombie rooms removal (in case server crashes and rooms are still occupied)
 - [ ] Resize code window and chat window partition
 - [ ] FIX: Different canvas sizes cause problems
+- [ ] Change code to be run in sandbox environment only (or use third party API)

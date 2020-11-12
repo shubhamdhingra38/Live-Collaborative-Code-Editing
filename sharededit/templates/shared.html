@@ -52,11 +52,11 @@
     <div class="row" class="mx-0">
         <!-- Editor -->
 
-        <div class="col-md-7 col-sm-12 p-0">
+        <div class="col-md-7 col-sm-12 p-0" style="height: 100vh;">
             <!-- Toolbar -->
-            <div class="toolbar p-1" style="background-color: rgba(0, 0, 0, 0.808);">
+            <div class="toolbar p-1" style="height: 5vh ;background-color: rgba(0, 0, 0, 0.808);">
                 <button onclick="runCode();" class="btn mx-1 btn-sm btn-info">Run</button>
-                <button class="btn btn-sm btn-success">Save</button>
+                <button onclick="saveCode();" class="btn btn-sm btn-success">Save</button>
 
                 <div style="position: absolute; right: 15px; top: 5px">
                     <label for="input-font" class="text-white" >Font Size:</label>
@@ -76,9 +76,13 @@
             
             </div>
             <!-- Main editor -->
-            <div id="editor" style="height: 100vh;">#code by: {{user.username}}
+            <div id="editor" style="height: 80vh;">#code by: {{user.username}}
 if __name__ == '__main__':
     print('Hello world!')
+            </div>
+            <div class="output-screen bg-dark p-2" style="height: 15vh; overflow: scroll; word-wrap:break-word;">
+                <strong><p class="text-white">Output</p></strong>
+                <p id="code-output" class="text-white"></p>
             </div>
 
         </div>
