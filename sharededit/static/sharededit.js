@@ -42,7 +42,11 @@ chatSocket.onmessage = function (e) {
             cursorPos = editor.selection.getCursor();
             // console.log(cursorPos, 'is the cursor at')
             lock = true;
-            if(data['text']!=null){
+            if(data['sync']){
+                editor.setValue(data['text'])
+                editor.clearSelection() // This will remove the highlight over the text
+            }
+            else if(data['text']!=null){
                 editor.getSession().getDocument().applyDeltas([data['text']])
                 // editor.moveCursorTo(5,5);
                 // editor.moveCursorToPosition(3,0);
@@ -93,8 +97,6 @@ function runCode(e) {
     }).then(res => {
         let text = res.data.results.replace("\n", "<br>")
         ele.innerHTML = text
-        
-
     }).catch(err=>{
         ele.classList.add('text-danger')
         ele.innerText = "Could not execute code"
@@ -104,5 +106,12 @@ function runCode(e) {
 //also resynchronize the code for all clients connected through WS
 //TODO
 function saveCode(e) {
+    console.log("pressed")
     let code = editor.getValue()
+    //synchronizes the code for all clients with the code which is present with the user that presses the button
+    chatSocket.send(JSON.stringify({
+        type: "editor",
+        text: code,
+        sync: true,
+    }))
 }

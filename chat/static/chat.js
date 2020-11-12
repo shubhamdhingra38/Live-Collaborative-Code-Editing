@@ -38,7 +38,6 @@ $("#input").on('keypress', (e) => {
 chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
 
-    console.log("YES this")
     if(data.username){
         document.querySelector('#chat-text').innerHTML += ('<span class="text-danger">' + data.username + '</span>'+ ': ' + data.message + '<br/>')
     }
@@ -51,7 +50,9 @@ chatSocket.onmessage = function (e) {
 }
 
 chatSocket.onclose = (e) => {
-    alert("Lost connection to the server. Disconnected.")
+    setTimeout(function(){
+        alert("Lost connection to the server. Disconnected.")
+    }, 200)
 }
 
 

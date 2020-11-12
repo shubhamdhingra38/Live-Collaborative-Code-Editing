@@ -84,11 +84,13 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
         else:
             text = text_data_json['text']
+            sync = True if 'sync' in text_data_json else False
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'text_change',
                     'text': text,
+                    'sync': sync,
                     'username': self.user.username,
                 }
             )
@@ -118,12 +120,17 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def text_change(self, event):
         text = event['text']
         username = event['username']
-        print("got some text", text)
+        sync = event['sync']
+
+        print("got some text\n", text)
+        if sync:
+            print("it is a sync request")
 
         await self.send(text_data=json.dumps({
             'type': 'editor',
             'text': text,
             'username': username,
+            'sync': sync
         }))
 
     async def disconnect_message(self, event):

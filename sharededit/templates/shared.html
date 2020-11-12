@@ -52,9 +52,9 @@
     <div class="row" class="mx-0">
         <!-- Editor -->
 
-        <div class="col-md-7 col-sm-12 p-0" style="height: 100vh;">
+        <div class="col-md-7 col-sm-12 p-0" >
             <!-- Toolbar -->
-            <div class="toolbar p-1" style="height: 5vh ;background-color: rgba(0, 0, 0, 0.808);">
+            <div class="toolbar p-1" style="min-height: 40px; height: 5vh ;background-color: rgba(0, 0, 0, 0.808);">
                 <button onclick="runCode();" class="btn mx-1 btn-sm btn-info">Run</button>
                 <button onclick="saveCode();" class="btn btn-sm btn-success">Save</button>
 
@@ -77,10 +77,9 @@
             </div>
             <!-- Main editor -->
             <div id="editor" style="height: 80vh;">#code by: {{user.username}}
-if __name__ == '__main__':
-    print('Hello world!')
+print('Hello world!')
             </div>
-            <div class="output-screen bg-dark p-2" style="height: 15vh; overflow: scroll; word-wrap:break-word;">
+            <div class="output-screen bg-dark p-2" style="height: 15vh; overflow: auto; word-wrap:break-word;">
                 <strong><p class="text-white">Output</p></strong>
                 <p id="code-output" class="text-white"></p>
             </div>
