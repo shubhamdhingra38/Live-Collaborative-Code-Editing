@@ -65,7 +65,6 @@ chatSocket.onmessage = function (e) {
         // console.log('got canvas data')
         // console.log(data['data'])
         drawQueue.push(data['data'])
-
     }
     // console.log(data)
    

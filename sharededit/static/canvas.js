@@ -79,9 +79,20 @@ function inside(){
     return (mouseX <= width && mouseX >= 0 && mouseY <= height && mouseY >= 0);
 }
 
-function draw(){
+function getMappedValue(dimensions, x, y){
+    let [w, h] = dimensions
+    console.log(w, h)
+    console.log(x, y)
+    console.log(width, height)
+    //w1/x = myWidth/myX
+    //myX = (myWidth * x) / w1
+    let myX = (width * x)/w
+    let myY = (height * y)/h
+    console.log(myX, myY, 'here')
+    return [myX, myY]
+}
 
-    
+function draw(){
     frameRate(60)
     strokeWeight(3)
     if(eraseMode && inside()){
@@ -94,7 +105,11 @@ function draw(){
         // console.log('drawQueue was not null')
         //draw then set to null, received data from socket mouse position
         let data = drawQueue.shift() //careful, this is not O(1) but O(n); maybe change later? TODO
+        let dimensions = data['dimensions']
+        console.log(dimensions)
         let pos = data['mousePos']
+        let [mappedMouseX, mappedMouseY] = getMappedValue(dimensions, pos['mouseX'], pos['mouseY'])
+        let [mappedPMouseX, mappedPMouseY] = getMappedValue(dimensions, pos['pmouseX'], pos['pmouseY'])
         if(data.eraseMode){
             strokeWeight(20)
             stroke(bgColor)
@@ -102,7 +117,8 @@ function draw(){
         else{
             stroke(data.color.levels)
         }
-        line(pos.mouseX, pos.mouseY, pos.pmouseX, pos.pmouseY)
+        // line(pos.mouseX, pos.mouseY, pos.pmouseX, pos.pmouseY)
+        line(mappedMouseX, mappedMouseY, mappedPMouseX, mappedPMouseY)
     }
     if(mouseIsPressed){
         if(!inside()){
@@ -121,7 +137,8 @@ function draw(){
                     mouseX, mouseY, pmouseX, pmouseY
                 },
                 'color': colorPicker.color(),
-                eraseMode
+                eraseMode,
+                'dimensions': [width, height],
             }
         }))
     }
