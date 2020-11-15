@@ -41,11 +41,17 @@ function setup(){
 
     clearBtn.mouseClicked(() => {
         resetSketch()
+        chatSocket.send(JSON.stringify({
+        'type': 'canvas',
+        'data': {
+            'clear': true
+        }
+    }))
     })
 
-    fill('white');
-    textSize(16)
-    text("Color", 10, 45)
+    // fill('white');
+    // textSize(16)
+    // text("Color", 10, 45)
 
     colorPicker = createColorPicker('#ed225d')
     colorPicker.position(10, 50)
@@ -56,9 +62,10 @@ function setup(){
 function resetSketch(){
     background(bgColor)
     stroke(0, 0, 0)
-    fill('white')
-    textSize(16)
-    text("Color", 10, 45)
+
+    // fill('white')
+    // textSize(16)
+    // text("Color", 10, 45)
 }
 
 function addStyleToButton(btn, style) {
@@ -81,14 +88,14 @@ function inside(){
 
 function getMappedValue(dimensions, x, y){
     let [w, h] = dimensions
-    console.log(w, h)
-    console.log(x, y)
-    console.log(width, height)
+    // console.log(w, h)
+    // console.log(x, y)
+    // console.log(width, height)
     //w1/x = myWidth/myX
     //myX = (myWidth * x) / w1
     let myX = (width * x)/w
     let myY = (height * y)/h
-    console.log(myX, myY, 'here')
+    // console.log(myX, myY, 'here')
     return [myX, myY]
 }
 
@@ -105,8 +112,13 @@ function draw(){
         // console.log('drawQueue was not null')
         //draw then set to null, received data from socket mouse position
         let data = drawQueue.shift() //careful, this is not O(1) but O(n); maybe change later? TODO
+        // console.log(data)
+        if(data['clear']){
+            resetSketch()
+            return
+        }
         let dimensions = data['dimensions']
-        console.log(dimensions)
+        // console.log(dimensions)
         let pos = data['mousePos']
         let [mappedMouseX, mappedMouseY] = getMappedValue(dimensions, pos['mouseX'], pos['mouseY'])
         let [mappedPMouseX, mappedPMouseY] = getMappedValue(dimensions, pos['pmouseX'], pos['pmouseY'])
@@ -139,8 +151,8 @@ function draw(){
                 'color': colorPicker.color(),
                 eraseMode,
                 'dimensions': [width, height],
+                'clear': false
             }
         }))
     }
-
 }

@@ -94,11 +94,24 @@ function runCode(e) {
     axios.post('/code/run/', {
         'code': code,
     }).then(res => {
-        let text = res.data.results.replace("\n", "<br>")
-        ele.innerHTML = text
+        // let text = res.data.results.replace("\n", "<br>")
+        let data = res.data
+        let text
+        if(data.code == '0'){
+            text = res.data.results
+        }
+        else if(data.code == '1'){
+            ele.classList.add('text-danger')
+            text = res.data.results
+        }
+        else if(data.code == '2'){
+            ele.classList.add('text-danger')
+            text = 'Compilation/Syntax errors!'
+        }
+        ele.innerHTML = text 
     }).catch(err=>{
         ele.classList.add('text-danger')
-        ele.innerText = "Could not execute code"
+        ele.innerHTML = 'Unexpected error occured'
     })
 }
 

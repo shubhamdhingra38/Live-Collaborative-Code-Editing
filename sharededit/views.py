@@ -11,6 +11,12 @@ from io import StringIO
 import time
 import sys
 
+
+RUN_URL = u'https://api.hackerearth.com/v3/code/run/'
+CLIENT_SECRET = '5631ed208b0b61a8e229b5e57c1f27316b0a1813'
+
+
+
 @login_required
 def shared_editing(request, room_name):
     print(room_name, 'was visited')
@@ -38,17 +44,37 @@ def shared_editing(request, room_name):
         })
 
 
-#TODO (this is very unsafe way of executing untrusted scripts)
 @csrf_exempt
 def run_code(request):
     if request.method == 'POST':
         body = json.loads(request.body)
         code = body['code']
-        out = StringIO()
-        sys.stdout = out
-        try:
-            exec(code)
-            results = out.getvalue()
-            return JsonResponse({"code": 0, "msg": "Successfully ran code", "results": results}, status=200)
-        except:
-            return JsonResponse({"code": 1, "msg": "Could not execute the code"}, status=400)
+        # TODO (this is very unsafe way of executing untrusted scripts)
+        # out = StringIO() 
+        # sys.stdout = out
+        # try:
+        #     exec(code)
+        #     results = out.getvalue()
+        #     return JsonResponse({"code": 0, "msg": "Successfully ran code", "results": results}, status=200)
+        # except:
+        #     return JsonResponse({"code": 1, "msg": "Could not execute the code"}, status=400)
+
+        data = {
+            'client_secret': CLIENT_SECRET,
+            'async': 0,
+            'source': code,
+            'lang': "PYTHON3",
+            'time_limit': 5,
+            'memory_limit': 262144,
+        }
+        r = requests.post(RUN_URL, data=data)
+        results = r.json()['run_status']
+        print(results)
+        if results['status'] == 'AC':
+            return JsonResponse({"code": 0, "msg": "Successfully ran code", "results": results['output_html']}, status=200)
+        elif results['status'] == 'CE':
+            return JsonResponse({"code": 2, "msg": "Compilation error"}, status=200)
+        elif results['status'] == 'RE':
+            return JsonResponse({"code": 1, "msg": "Could not execute the code", "results": results['stderr']}, status=200)
+        else:
+            return JsonResponse({"code": -1, "msg": "Unexpected error"}, status=400)

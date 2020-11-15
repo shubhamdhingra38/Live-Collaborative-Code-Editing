@@ -20,8 +20,8 @@ document.querySelector('#submit').onclick = function (e) {
 
 
 const chatSocket = new WebSocket(
-    'wss://' +
-    // 'ws://' +
+    // 'wss://' +
+    'ws://' +
     window.location.host +
     '/ws/chat/' +
     roomName +

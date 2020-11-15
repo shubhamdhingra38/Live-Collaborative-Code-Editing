@@ -19,4 +19,4 @@ Live hosted website: https://collab-code-edit.herokuapp.com/
 - [ ] Zombie rooms removal (in case server crashes and rooms are still occupied)
 - [ ] Resize code window and chat window partition
 - [x] FIX: Different canvas sizes cause problems
-- [ ] Change code to be run in sandbox environment only (or use third party API)
+- [x] Change code to be run in sandbox environment only (or use third party API)
