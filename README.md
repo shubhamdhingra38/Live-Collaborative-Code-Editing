@@ -5,8 +5,11 @@ Live hosted website: https://collab-code-edit.herokuapp.com/
 
 
 # Screenshot
-<img src="https://github.com/shubhamdhingra38/Basic-Chat-App-Django-Channels/blob/master/Screenshots/Capture.PNG"/>
+<img src="https://github.com/shubhamdhingra38/Basic-Chat-App-Django-Channels/blob/master/Screenshots/Screenshot.png"/>
 
+
+# Video Demo
+https://youtu.be/Tez2jAOlcM8
 
 
 # TODO
