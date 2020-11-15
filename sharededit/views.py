@@ -10,10 +10,11 @@ import json
 from io import StringIO
 import time
 import sys
+import os
 
 
 RUN_URL = u'https://api.hackerearth.com/v3/code/run/'
-CLIENT_SECRET = '5631ed208b0b61a8e229b5e57c1f27316b0a1813'
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
 
 
 
