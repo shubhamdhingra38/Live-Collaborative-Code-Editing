@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block title %}
-<title>Shared</title>
+<title>Room: {{ room_name }} | Collab Code Edit</title>
+
 <!-- <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js"></script> -->
@@ -20,7 +21,7 @@
 {% block body %}
 
     {% if set_pass %}
-    <div class="h-100 d-flex mx-2 justify-content-center align-items-center">
+    <div class="h-100 d-flex mx-4 justify-content-center align-items-center">
         <div>
             <p class="lead">The room is <strong>unoccupied.</strong>
                 Enter a password to claim it. 
@@ -33,7 +34,7 @@
         </div>
     </div>
     {% elif get_pass %}
-    <div class="h-100 d-flex mx-2 justify-content-center align-items-center">
+    <div class="h-100 d-flex mx-4 justify-content-center align-items-center">
         <div>
             <p class="lead text-danger">The room is already occupied!
                 Enter the password: 

@@ -81,7 +81,15 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'username': self.user.username,
                 }
             )
-
+        elif text_data_json['type'] == 'output':
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'code_output',
+                    'data': text_data_json['data'],
+                    'username': self.user.username,
+                }
+            )
         else:
             text = text_data_json['text']
             sync = True if 'sync' in text_data_json else False
@@ -94,7 +102,13 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'username': self.user.username,
                 }
             )
-        
+    
+    async def code_output(self, event):
+        data = event['data']
+        await self.send(text_data=json.dumps({
+            'type': 'output',
+            'data': data,
+        }))
     
     async def canvas_information(self, event):
         data = event['data']

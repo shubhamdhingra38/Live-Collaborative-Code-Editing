@@ -66,6 +66,11 @@ chatSocket.onmessage = function (e) {
         // console.log(data['data'])
         drawQueue.push(data['data'])
     }
+    else if(data['type']=='output'){
+        console.log("HERE")
+        showOutput(data['data'])
+        console.log(data)
+    }
     // console.log(data)
    
 }
@@ -85,34 +90,42 @@ function changeFontSize(e) {
 }
 
 
-
-
-function runCode(e) {
+function runCode(e){
     let code = editor.getValue()
     let ele = document.getElementById('code-output')
     ele.classList = ['text-white']
     axios.post('/code/run/', {
         'code': code,
     }).then(res => {
-        // let text = res.data.results.replace("\n", "<br>")
-        let data = res.data
-        let text
-        if(data.code == '0'){
-            text = res.data.results
-        }
-        else if(data.code == '1'){
-            ele.classList.add('text-danger')
-            text = res.data.results
-        }
-        else if(data.code == '2'){
-            ele.classList.add('text-danger')
-            text = 'Compilation/Syntax errors!'
-        }
-        ele.innerHTML = text 
+        chatSocket.send(JSON.stringify({
+            type: "output",
+            data: res,
+        }));
     }).catch(err=>{
         ele.classList.add('text-danger')
         ele.innerHTML = 'Unexpected error occured'
     })
+}
+
+
+
+function showOutput(res) {
+    let data = res.data
+    let ele = document.getElementById('code-output')
+    ele.classList = ['text-white']
+    let text
+    if(data.code == '0'){
+        text = data.results
+    }
+    else if(data.code == '1'){
+        ele.classList.add('text-danger')
+        text = data.results
+    }
+    else if(data.code == '2'){
+        ele.classList.add('text-danger')
+        text = 'Compilation/Syntax errors!'
+    }
+    ele.innerHTML = text 
 }
 
 //also resynchronize the code for all clients connected through WS
