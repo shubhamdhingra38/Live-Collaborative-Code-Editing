@@ -21,6 +21,7 @@ def login(request):
     return render(request, 'login.html', {'errors': errors})
 
 def register(request):
+    errors = []
     if request.method == 'POST':
         form = forms.CreateUserForm(request.POST)
         # print(form)
@@ -31,9 +32,12 @@ def register(request):
             user = User.objects.get(username=username)
             chat_user = ChatUser(chat_user=user)
             chat_user.save()
+
             return redirect('/auth/login')
         else:
             print("invalid form")
+            print(form.errors)
+            return render(request, 'register.html', {'form': form, 'errors': form.errors})
     else:
         form = forms.CreateUserForm()
     return render(request, 'register.html', {'form': form})

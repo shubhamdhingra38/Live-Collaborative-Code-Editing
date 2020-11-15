@@ -12,14 +12,13 @@
 </style>
 <div class="container mt-3">
         {% if errors %}
-        {% for error in errors %}
             <div class="alert alert-danger alert-dismissible fade show">
-                <strong>{{ error|escape }}</strong>
+                <strong>Error!</strong>
+                <p>{{ errors }}</p>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-        {% endfor %}
         {% endif %}
 </div>
 <div class="h-100 d-flex mx-2 justify-content-center align-items-center  mt-3">

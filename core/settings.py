@@ -27,8 +27,11 @@ SECRET_KEY = get_random_secret_key()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+if 'LOCAL' in os.environ:
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'collab-code-edit.herokuapp.com/']
 

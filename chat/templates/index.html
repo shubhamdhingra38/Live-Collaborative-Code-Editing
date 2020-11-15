@@ -17,9 +17,9 @@
             <p class="lead" style="color: brown;">You are logged in as  <span  class="px-1" style="color: rgb(0, 0, 0); font-weight: bold">{{user.username}}</span></p>
 
             <br>
-            <div class="row" style="margin-left: 5px; margin-right: 5px;">
-                <input placeholder="Enter room name" style="font-size: 0.8rem;" type="text" class="col-6 form-control mx-1" name="room-name" id="room">
-                <button onclick="redirect();" class="btn btn-sm col-4 mx-2 btn-sm btn-success" style="width: 1px !important;">Enter</button>
+            <div class="d-flex" style="margin-left: 5px; margin-right: 5px;">
+                <input placeholder="Enter room name" style="font-size: 0.8rem; min-width: 150px !important;" type="text" class="form-control mx-1" name="room-name" id="room">
+                <button onclick="redirect();" class="btn btn-sm mx-2 btn-sm btn-success">Enter</button>
             </div>
             <br>
 
@@ -27,6 +27,9 @@
         {% else %}
             <p class="lead">You must login to access the chat room.</p>
             <a class="strong" href="/auth/login">Login</a>
+            <br/>
+            <hr>
+            <p class="text-muted">Don't have an account? <a href="/auth/register">Register</a></p>
         {% endif %}
 
         </div>
