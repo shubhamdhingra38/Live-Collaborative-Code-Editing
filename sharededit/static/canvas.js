@@ -88,14 +88,24 @@ function inside(){
 
 function getMappedValue(dimensions, x, y){
     let [w, h] = dimensions
+<<<<<<< HEAD
     // console.log(w, h)
     // console.log(x, y)
     // console.log(width, height)
+=======
+    console.log(w, h)
+    console.log(x, y)
+    console.log(width, height)
+>>>>>>> 1d4f0d70d861bd613cf681edec817deaa0b4794f
     //w1/x = myWidth/myX
     //myX = (myWidth * x) / w1
     let myX = (width * x)/w
     let myY = (height * y)/h
+<<<<<<< HEAD
     // console.log(myX, myY, 'here')
+=======
+    console.log(myX, myY, 'here')
+>>>>>>> 1d4f0d70d861bd613cf681edec817deaa0b4794f
     return [myX, myY]
 }
 
@@ -112,6 +122,7 @@ function draw(){
         // console.log('drawQueue was not null')
         //draw then set to null, received data from socket mouse position
         let data = drawQueue.shift() //careful, this is not O(1) but O(n); maybe change later? TODO
+<<<<<<< HEAD
         // console.log(data)
         if(data['clear']){
             resetSketch()
@@ -119,6 +130,10 @@ function draw(){
         }
         let dimensions = data['dimensions']
         // console.log(dimensions)
+=======
+        let dimensions = data['dimensions']
+        console.log(dimensions)
+>>>>>>> 1d4f0d70d861bd613cf681edec817deaa0b4794f
         let pos = data['mousePos']
         let [mappedMouseX, mappedMouseY] = getMappedValue(dimensions, pos['mouseX'], pos['mouseY'])
         let [mappedPMouseX, mappedPMouseY] = getMappedValue(dimensions, pos['pmouseX'], pos['pmouseY'])
@@ -151,7 +166,10 @@ function draw(){
                 'color': colorPicker.color(),
                 eraseMode,
                 'dimensions': [width, height],
+<<<<<<< HEAD
                 'clear': false
+=======
+>>>>>>> 1d4f0d70d861bd613cf681edec817deaa0b4794f
             }
         }))
     }
