@@ -14,7 +14,7 @@ def login(request):
         if user is not None:
             print('successfully auth')
             django_login(request, user)
-            return redirect('/chat')
+            return redirect('index')
         else:
             print('unsucessful login')
             errors.append("Invalid login details")
@@ -40,4 +40,4 @@ def register(request):
 
 def logout(request):
     django_logout(request)
-    return redirect('/chat', {'success': "Logged out successfully"})
+    return redirect('index')

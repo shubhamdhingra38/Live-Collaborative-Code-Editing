@@ -4,7 +4,7 @@ $(document).ready(() => {
         let token =  $('input[name="csrfmiddlewaretoken"]').attr('value')
         let password = $('#password').val()
         console.log(password)
-        axios.post('/chat/auth/', {
+        axios.post('/auth/', {
             "password": password,
             "room_name": roomName,
             "type": "set_pass"
@@ -26,7 +26,7 @@ $(document).ready(() => {
         let token =  $('input[name="csrfmiddlewaretoken"]').attr('value')
         let password = $('#password').val()
         console.log(password)
-        axios.post('/chat/auth/', {
+        axios.post('/auth/', {
                 "password": password,
                 "room_name": roomName,
                 "type": "get_pass"
