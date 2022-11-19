@@ -1,7 +1,6 @@
 # Live Collaborative Code Editing
 A web application which uses sockets to enable real-time code sharing, chatting and canvas sketching all at once. 
-Live hosted website: https://collab-code-edit.herokuapp.com/
-
+Live hosted website: https://collab-code-edit.herokuapp.com/ (probably will go down as Heroku free tier is ending)
 
 
 # Screenshot

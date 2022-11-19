@@ -14,31 +14,30 @@ import os
 
 
 RUN_URL = u'https://api.hackerearth.com/v3/code/run/'
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
-
+CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
 
 
 @login_required
 def shared_editing(request, room_name):
     print(room_name, 'was visited')
-    if not is_room_occupied(room_name): #if not occupied, ask to set a password
-       return render(request, 'shared.html', {
-           'room_name': room_name,
-           'set_pass': True,
-       }) 
-    else: #else ask user to enter the password
+    if not is_room_occupied(room_name):  # if not occupied, ask to set a password
+        return render(request, 'shared.html', {
+            'room_name': room_name,
+            'set_pass': True,
+        })
+    else:  # else ask user to enter the password
         chat_user = ChatUser.objects.get(chat_user=request.user)
         print(chat_user)
         chat_rooms = UserAndRoom.objects.filter(chat_user=chat_user)
         print(chat_rooms)
         for room in chat_rooms:
             if str(room.chat_room) == room_name:
-                #user is already authorized
-                return render(request, 'shared.html',{
+                # user is already authorized
+                return render(request, 'shared.html', {
                     'room_name': room_name,
                     'user': request.user
                 })
-        #user is not authorized, ask for password
+        # user is not authorized, ask for password
         return render(request, 'shared.html', {
             'room_name': room_name,
             'get_pass': True,
@@ -51,7 +50,7 @@ def run_code(request):
         body = json.loads(request.body)
         code = body['code']
         # TODO (this is very unsafe way of executing untrusted scripts)
-        # out = StringIO() 
+        # out = StringIO()
         # sys.stdout = out
         # try:
         #     exec(code)

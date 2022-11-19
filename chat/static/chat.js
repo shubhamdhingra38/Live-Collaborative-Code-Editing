@@ -18,9 +18,13 @@ document.querySelector('#submit').onclick = function (e) {
 };
 
 
+const isLocalHost = () => {
+    return location.hostname === "localhost" || location.hostname === "127.0.0.1"
+}
+
 
 const chatSocket = new WebSocket(
-    'wss://' +
+    (isLocalHost() ? 'ws://' : 'wss://') +
     // 'ws://' +
     window.location.host +
     '/ws/chat/' +
