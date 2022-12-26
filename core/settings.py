@@ -27,13 +27,11 @@ SECRET_KEY = get_random_secret_key()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-if 'LOCAL' in os.environ:
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'collab-code-edit.herokuapp.com/']
+# ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', 'localhost',
+#                  'collab-code-edit.herokuapp.com/']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -154,7 +152,7 @@ CHANNEL_LAYERS = {
 #         },
 #     },
 # }
-#or alternatively use Redis
+# or alternatively use Redis
 # CHANNEL_LAYERS = {
 #     'default': {
 #         'BACKEND': 'channels_redis.core.RedisChannelLayer',

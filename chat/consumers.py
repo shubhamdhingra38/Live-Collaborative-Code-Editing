@@ -4,7 +4,6 @@ from channels.db import database_sync_to_async
 from sharededit.models import ChatUser, ChatRoom, UserAndRoom
 
 
-
 class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user = self.scope['user']
@@ -31,7 +30,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_chat_user(self):
         return ChatUser.objects.get(chat_user=self.scope['user'])
-    
+
     @database_sync_to_async
     def get_chat_room(self):
         return ChatRoom.objects.get(room_name=self.room_name)
@@ -57,8 +56,6 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-
-
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -102,14 +99,14 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     'username': self.user.username,
                 }
             )
-    
+
     async def code_output(self, event):
         data = event['data']
         await self.send(text_data=json.dumps({
             'type': 'output',
             'data': data,
         }))
-    
+
     async def canvas_information(self, event):
         data = event['data']
         # print('got canvas data', data)
@@ -130,7 +127,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             'message': message,
             'username': username,
         }))
-    
+
     async def text_change(self, event):
         text = event['text']
         username = event['username']
@@ -154,7 +151,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             'type': 'chat',
             'message': message
         }))
-    
+
     async def connect_message(self, event):
         message = event['message']
 

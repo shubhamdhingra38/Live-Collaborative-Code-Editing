@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+**/venv/*
+**/*.pyc
+**/staticfiles/*
+**/db.sqlite3
+**/.python-version
